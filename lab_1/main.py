@@ -7,18 +7,18 @@ Count frequencies dictionary by the given arbitrary text
 def calculate_frequences(text: str) -> dict:
     if not isinstance(text, str):
         return {}
-    form_text = ''
+    formated_text = ''
     for letter in str(text):
         if letter.isalpha() or letter == ' ' or letter == '\n':
-            form_text += letter.lower()
-    line_text = form_text.split()
-    new_dick = {}
+            formated_text += letter.lower()
+    line_text = formated_text.split()
+    dictionary_with_frequences = {}
     for word in line_text:
-        if word not in new_dick:
-            new_dick[word] = 1
+        if word not in dictionary_with_frequences:
+            dictionary_with_frequences[word] = 1
         else:
-            new_dick[word] += 1
-    return new_dick
+            dictionary_with_frequences[word] += 1
+    return dictionary_with_frequences
 
 
 def filter_stop_words(frequencies: dict, stop_words: tuple) -> dict:
@@ -38,12 +38,12 @@ def filter_stop_words(frequencies: dict, stop_words: tuple) -> dict:
 def get_top_n(frequencies: dict, top_n: int) -> tuple:
     if top_n < 0:
         return ()
-    animedeaths = sorted(frequencies.items(), key=lambda x: x[1], reverse=True)
-    isthatanime = []
-    for turd in animedeaths:
-        isthatanime.append(turd[0])
-    top10 = tuple(isthatanime[0:top_n])
-    return top10
+    line_sorted_items = sorted(frequencies.items(), key=lambda x: x[1], reverse=True)
+    line_with_top_n = []
+    for word in line_sorted_items:
+        line_with_top_n.append(word[0])
+    tuple_with_top_n = tuple(line_with_top_n[0:top_n])
+    return tuple_with_top_n
 
 
 def read_from_file(path_to_file: str, lines_limit: int) -> str:
