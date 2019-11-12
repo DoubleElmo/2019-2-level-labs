@@ -14,7 +14,7 @@ def initialize_edit_matrix(edit_matrix: tuple, add_weight: int, remove_weight: i
     list_matrix = list(edit_matrix)
     if not isinstance(add_weight, int) or not isinstance(remove_weight, int):
         return list_matrix
-    if len(list_matrix) is False or len(list_matrix[0]) is False:
+    if len(list_matrix) is 0 or len(list_matrix[0]) is 0:
         return list_matrix
     for ind1 in range(1, len(list_matrix)):
         list_matrix[ind1][0] = list_matrix[ind1-1][0] + remove_weight
