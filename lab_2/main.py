@@ -14,7 +14,7 @@ def initialize_edit_matrix(edit_matrix: tuple, add_weight: int, remove_weight: i
     list_matrix = list(edit_matrix)
     if not isinstance(add_weight, int) or not isinstance(remove_weight, int):
         return list_matrix
-    elif len(list_matrix) == 0 or len(list_matrix[0]) == 0:
+    if len(list_matrix) is False or len(list_matrix[0]) is False:
         return list_matrix
     for ind1 in range(1, len(list_matrix)):
         list_matrix[ind1][0] = list_matrix[ind1-1][0] + remove_weight
@@ -42,7 +42,7 @@ def fill_edit_matrix(edit_matrix: tuple,
     for index1, thing1 in enumerate(list_matrix):
         if index1 == 0:
             continue
-        for index2, thing2 in enumerate(thing1):
+        for index2, _ in enumerate(thing1):
             if index2 == 0:
                 continue
             value1 = list_matrix[index1 - 1][index2] + remove_weight
@@ -51,9 +51,7 @@ def fill_edit_matrix(edit_matrix: tuple,
                 value3 = list_matrix[index1 - 1][index2 - 1] + 0
             else:
                 value3 = list_matrix[index1 - 1][index2 - 1] + substitute_weight
-            list_numbers = [value1, value2, value3]
-            minint = minimum_value(tuple(list_numbers))
-            thing1[index2] = minint
+            thing1[index2] = minimum_value(tuple([value1, value2, value3]))
     return list_matrix
 
 
@@ -67,7 +65,8 @@ def find_distance(original_word: str,
         return -1
     edit_matrix = tuple(generate_edit_matrix(len(original_word)+1, len(target_word)+1))
     edit_matrix = initialize_edit_matrix(edit_matrix, add_weight, remove_weight)
-    edit_matrix = fill_edit_matrix(tuple(edit_matrix), add_weight, remove_weight, substitute_weight, original_word, target_word)
+    edit_matrix = fill_edit_matrix(tuple(edit_matrix), add_weight, remove_weight, substitute_weight, original_word, 
+                                   target_word)
     distance = edit_matrix[-1][-1]
     return distance
 
@@ -76,7 +75,7 @@ def save_to_csv(edit_matrix: tuple, path_to_file: str) -> None:
     file = open(path_to_file, 'w')
     for line in edit_matrix:
         for ind1, val1 in enumerate(line):
-            line[iind1] = str(val1)
+            line[ind1] = str(val1)
         file.write(','.join(line) + '\n')
     file.close()
 
