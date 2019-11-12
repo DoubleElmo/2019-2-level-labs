@@ -14,7 +14,7 @@ def initialize_edit_matrix(edit_matrix: tuple, add_weight: int, remove_weight: i
     list_matrix = list(edit_matrix)
     if not isinstance(add_weight, int) or not isinstance(remove_weight, int):
         return list_matrix
-    if len(list_matrix) is 0 or len(list_matrix[0]) is 0:
+    if not list_matrix or not list_matrix[0]:
         return list_matrix
     for ind1 in range(1, len(list_matrix)):
         list_matrix[ind1][0] = list_matrix[ind1-1][0] + remove_weight
@@ -65,7 +65,7 @@ def find_distance(original_word: str,
         return -1
     edit_matrix = tuple(generate_edit_matrix(len(original_word)+1, len(target_word)+1))
     edit_matrix = initialize_edit_matrix(edit_matrix, add_weight, remove_weight)
-    edit_matrix = fill_edit_matrix(tuple(edit_matrix), add_weight, remove_weight, substitute_weight, original_word, 
+    edit_matrix = fill_edit_matrix(tuple(edit_matrix), add_weight, remove_weight, substitute_weight, original_word,
                                    target_word)
     distance = edit_matrix[-1][-1]
     return distance
