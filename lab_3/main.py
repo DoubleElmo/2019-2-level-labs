@@ -73,29 +73,22 @@ class NGramTrie:
         if len(prefix) != self.size - 1:
             return []
         mid_pref = []
-        fin_pref = []
-        top_keys = sorted(self.gram_log_probabilities, key=lambda x: int(self.gram_log_probabilities[x]), reverse=True)
-        print(top_keys)
+        fin_pref = list(prefix)
+        top_keys = sorted(self.gram_log_probabilities, key=self.gram_log_probabilities.__getitem__, reverse=True)
         while True:
             flag = False
             for val1 in top_keys:
                 if val1[:-1] == prefix:
-                    mid_pref = val1[-self.size + 1:]
-                    fin_pref = list(prefix) + list(mid_pref)
+                    mid_pref = val1[-1]
+                    fin_pref += [mid_pref]
                     flag = True
+                    break
             if not flag:
                 break
             new_pref = list(prefix[1:])
             new_pref.append(mid_pref)
             prefix = tuple(new_pref)
-            # if :
-            #     break
-            # for val1 in top_keys:
-            #     if val1[:-1] == prefix:
-            #         mid_pref.extend(val1[self.size-1:])
-            #         fin_pref = list(prefix) + mid_pref
         return fin_pref
-
 
 def encode(storage_instance, corpus) -> list:
     newlist = [[storage_instance.get_id_of(val) for val in corpus] for _ in range(1, len(corpus))]
